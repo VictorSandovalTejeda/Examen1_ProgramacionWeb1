@@ -1,0 +1,92 @@
+<div *ngIf="!libroSeleccionado; else detalle" class="card">
+  <div class="card-body">
+    <h2 class="card-title display-4 text-center pb-4">Libros en Biblioteca</h2>
+    <div class="card-text">
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Copias Disponibles</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let libro of libros" (click)="onSelect(libro);">
+            <td>{{libro.titulo}}</td>
+            <td>{{libro.autor}}</td>
+            <td>{{libro.copias}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<ng-template #detalle>
+  <div class="card w-50">
+      <div class="card-body">
+          <h2 class="card-title display-4 pb-4">{{libroSeleccionado.titulo}}</h2>
+          <p class="lead">Autor: {{libroSeleccionado.autor}}</p>
+          <hr class="my-4">
+          <div class="card-text">
+            <form>
+              <div class="form-group">
+                <p class="lead">Categoria:</p>
+                <input type="text" [placeholder] = "libroSeleccionado.categoria" disabled>
+              </div>
+              <div class="form-group">
+                <div >
+                  <p class="lead">Cantidad:</p>
+                  <input type="number" name="cantidad" id="cantidad" [(ngModel)] = "libroSeleccionado.copias" disabled>
+                </div>
+                <div class="mt-4">
+                  <button *ngIf="libroSeleccionado.copias > 0" type="button" class="btn btn-outline-danger" (click)="prestarLibro(libroSeleccionado)"> Prestar libro </button>
+                  <button *ngIf="maximo > libroSeleccionado.copias" type="button" class="btn btn-outline-success ml-2" (click)="devolverLibro(libroSeleccionado)"> Devolver libro </button>
+                </div>
+              </div>
+              <hr class="my-4">
+              <div>
+                <button type="submit" class="btn btn-info" (click)="onSubmit()">Salvar</button>
+              </div>
+            </form>
+           
+          </div>
+        </div>
+  </div>
+</ng-template>
+
+
+
+
+
+<!-- <ng-template #detalle>
+    <div class="card w-50 mx-auto">
+      <div class="card-body">
+        <h2 class="card-title display-4">{{selectedProduct.nombre}}</h2>
+        <p class="lead">{{selectedProduct.marca}}</p>
+        <hr class="my-4">
+        <div class="card-text">
+          <form>
+            <div class="row">
+              <div class="col">
+                <input type="text" class="form-control" [placeholder]="selectedProduct.categoria" disabled>
+              </div>
+              <div class="col">
+                <input type="text" name="descripcion" class="form-control" [(ngModel)] = "selectedProduct.cantidad" disabled>
+              </div>
+              <div class="col-1">
+                <button type="button" class="btn btn-outline-success btn-sm float-right" (click)="sumarProducto()"> ▲ </button>
+              </div>
+              <div class="col-1">
+                  <button type="button" class="btn btn-outline-danger btn-sm float-right" (click)="restarProducto()"> ▼ </button>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div>
+              <button type="submit" class="btn btn-info" (click)="productSubmit()">Salvar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </ng-template> -->
